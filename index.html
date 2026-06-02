@@ -30,18 +30,24 @@
             <section class="hidden moedas">
                 <form action="">
                     <h2>Conversor de Moedas</h2>
-                    <div .resultado-moedas></div>
+                    <p>Cotação do Dolar Atual: 5,02$</p>
+                    <div class="resultado-moedas"></div>
 
-                    <input type="text" placeholder="Valor em Real">
-                    <input type="text" placeholder="Valor em Dolar">
+                    <div class="campos">
+                        <input type="number" placeholder="Valor em Real" id="valorReal" name="real">
+                        <p class="campos2">Real (R$)</p>
+                    </div>
 
-                    <button>Calcular</button>
+                    <div class="campos">
+                        <input type="number" placeholder="Valor em Dolar" id="valorUsd" name="dolar">
+                        <p class="campos2">Dolar ($)</p>
+                    </div>
                 </form>
             </section>
             <!-- Final Moedas ------------------------------------------------------------------------------------------------>
 
             <!-- IMC -------------------------------------------------------------------------------------------------------->
-            <section class="hidden imc">
+            <section class=" hidden imc">
                 <form>
                     <h2>Calculador de IMC</h2>
                     <select id="genero" name="genero">

@@ -31,15 +31,42 @@ function displayControler(id) {
 //! Conversor de moedas --------------------------------------------------------------------------------------------
 
 async function getDados(url) {
-  let dadosApi = await fetch(url);
-  console.log(dadosApi);
+  try {
+    if (!url) throw new Error("A Api não foi achada!");
+    const dadosApi = await fetch(url);
 
-  let dados = await dadosApi.json();
-
-  console.log(dados);
+    console.log(dadosApi);
+    if (dadosApi.ok === false)
+      throw new Error("Fetch não buscou as informações!");
+    const dados = await dadosApi.json();
+    console.log(dados);
+    dadosGlobal = dados;
+    if (!dados) throw new Error("Não foi transformada para .json");
+  } catch (error) {
+    console.error(error);
+    console.error("Algo deu errado, chefe!");
+  }
 }
+
 getDados(url);
-//! Final Conversor de moedas -------------------------------------------------------------------------------------------
+
+document.querySelector("#valorReal").addEventListener("input", (e) => {
+  let valorDoReal = document.querySelector("#valorReal").value;
+
+  let resultadoReal = valorDoReal / dadosGlobal.USDBRL.bid;
+
+  document.querySelector("#valorUsd").value = resultadoReal.toFixed(2);
+});
+
+document.querySelector("#valorUsd").addEventListener("input", (e) => {
+  let valorDoUsd = document.querySelector("#valorUsd").value;
+
+  let resultadoDolar = valorDoUsd * dadosGlobal.USDBRL.bid;
+
+  document.querySelector("#valorReal").value = resultadoDolar.toFixed(2);
+});
+
+//!Final Conversor de moedas-------------------------------------------------------------------------------------------
 
 //!Calculadora de IMC --------------------------------------------------------------------------------------------
 function calcularImc() {
