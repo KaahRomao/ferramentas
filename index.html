@@ -25,27 +25,41 @@
             <a id="regra">Regra de 3</a>
         </aside>
         <article>
+
+            <!-- Moedas ----------------------------------------------------------------------------------------------------->
             <section class="hidden moedas">
                 <form action="">
-                    <h2>Lorem, ipsum.</h2>
-                    <div>
-                        <input type="text" placeholder="Valor">
-                        <input type="text" placeholder="Valor">
-                    </div>
+                    <h2>Conversor de Moedas</h2>
+                    <div .resultado-moedas></div>
+
+                    <input type="text" placeholder="Valor em Real">
+                    <input type="text" placeholder="Valor em Dolar">
+
                     <button>Calcular</button>
                 </form>
             </section>
+            <!-- Final Moedas ------------------------------------------------------------------------------------------------>
+
+            <!-- IMC -------------------------------------------------------------------------------------------------------->
             <section class="hidden imc">
                 <form>
                     <h2>Calculador de IMC</h2>
+                    <select id="genero" name="genero">
+                        <option value="Masculino">Masculino</option>
+                        <option value="Feminino">Feminino</option>
+                    </select>
                     <input type="text" placeholder="Peso" id="peso">
                     <input type="text" placeholder="altura" id="altura">
                     <button onclick="calcularImc()" type="button" id="calculadorImc">Calcular</button>
 
 
-                    <div class="resultado"></div>
+                    <div class="resultado-imc"></div>
+                    <div class="grupos"></div>
                 </form>
             </section>
+            <!-- Final IMC ------------------------------------------------------------------------------------------------->
+
+
             <section class="hidden temp">
                 <form action="">
                     <h2>Lorem, ipsum.</h2>
