@@ -17,14 +17,76 @@
 
     <main>
         <aside>
-            <button>Moedas</button>
-            <button>IMC</button>
-            <button>Temperatura</button>
-            <button>Velocidade</button>
-            <button>Massa</button>
-            <button>Regra de 3</button>
+            <a id="moedas">Moedas</a>
+            <a id="imc">IMC</a>
+            <a id="temp">Temperatura</a>
+            <a id="velo">Velocidade</a>
+            <a id="massa">Massa</a>
+            <a id="regra">Regra de 3</a>
         </aside>
-        <article></article>
+        <article>
+            <section class="hidden moedas">
+                <form action="">
+                    <h2>Lorem, ipsum.</h2>
+                    <div>
+                        <input type="text" placeholder="Valor">
+                        <input type="text" placeholder="Valor">
+                    </div>
+                    <button>Calcular</button>
+                </form>
+            </section>
+            <section class="hidden imc">
+                <form>
+                    <h2>Calculador de IMC</h2>
+                    <input type="text" placeholder="Peso" id="peso">
+                    <input type="text" placeholder="altura" id="altura">
+                    <button onclick="calcularImc()" type="button" id="calculadorImc">Calcular</button>
+
+
+                    <div class="resultado"></div>
+                </form>
+            </section>
+            <section class="hidden temp">
+                <form action="">
+                    <h2>Lorem, ipsum.</h2>
+                    <div>
+                        <input type="text" placeholder="Valor">
+                        <input type="text" placeholder="Valor">
+                    </div>
+                    <button>Calcular</button>
+                </form>
+            </section>
+            <section class="hidden velo">
+                <form action="">
+                    <h2>Lorem, ipsum.</h2>
+                    <div>
+                        <input type="text" placeholder="Valor">
+                        <input type="text" placeholder="Valor">
+                    </div>
+                    <button>Calcular</button>
+                </form>
+            </section>
+            <section class="hidden massa">
+                <form action="">
+                    <h2>Lorem, ipsum.</h2>
+                    <div>
+                        <input type="text" placeholder="Valor">
+                        <input type="text" placeholder="Valor">
+                    </div>
+                    <button>Calcular</button>
+                </form>
+            </section>
+            <section class="hidden regra">
+                <form action="">
+                    <h2>Lorem, ipsum.</h2>
+                    <div>
+                        <input type="text" placeholder="Valor">
+                        <input type="text" placeholder="Valor">
+                    </div>
+                    <button>Calcular</button>
+                </form>
+            </section>
+        </article>
 
     </main>
 
