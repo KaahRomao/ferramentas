@@ -147,12 +147,14 @@ article section form {
   color: white;
 }
 
-.place {
+.place,
+.local {
   display: flex;
   width: 90%;
 }
 
-.place2 {
+.place2,
+.local2 {
   width: 40%;
   height: 30px;
   border-radius: 0 20px 20px 0;
@@ -166,6 +168,18 @@ article section form {
 #valorF,
 #valorK {
   width: 90%;
+  height: 30px;
+  text-align: center;
+  border-radius: 20px 0 0 20px;
+}
+
+.velo {
+  gap: 20px;
+}
+
+#km,
+#mph {
+  width: 80%;
   height: 30px;
   text-align: center;
   border-radius: 20px 0 0 20px;

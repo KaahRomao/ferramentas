@@ -218,4 +218,54 @@ document.querySelector("#valorK").addEventListener("input", (e) => {
 // K → F: (K - 273.15) * 9/5 + 32
 //! Final Conversor de Temperatura -------------------------------------------------------------------------------------
 
+//! Conversor de Velocidade -------------------------------------------------------------------------------------------
+
+document.querySelector("#km").addEventListener("input", (e) => {
+  let valorKm = Number(document.querySelector("#km").value);
+
+  let resultadoMph = valorKm * 0.621371;
+  document.querySelector("#mph").value = resultadoMph.toFixed(2);
+
+  if (valorKm >= 100000) {
+    document.querySelector("img").src = "./assets/img/download (5).jpeg";
+  } else if (valorKm >= 5000) {
+    document.querySelector("img").src = "./assets/img/download (4).jpeg";
+  } else if (valorKm >= 1000) {
+    document.querySelector("img").src = "./assets/img/download (3).jpeg";
+  } else if (valorKm >= 500) {
+    document.querySelector("img").src = "./assets/img/download (2).jpeg";
+  } else if (valorKm >= 100) {
+    document.querySelector("img").src = "./assets/img/download (7).jpeg";
+  } else if (valorKm >= 45) {
+    document.querySelector("img").src = "./assets/img/download (1).jpeg";
+  } else {
+    document.querySelector("img").src = "./assets/img/download.jpeg";
+  }
+});
+
+document.querySelector("#mph").addEventListener("input", (e) => {
+  let valorMph = Number(document.querySelector("#mph").value);
+
+  let resultadoKm = valorMph * 1.60934;
+  document.querySelector("#km").value = resultadoKm.toFixed(2);
+
+  if (valorMph >= 62137) {
+    document.querySelector("img").src = "./assets/img/download (5).jpeg";
+  } else if (valorMph >= 3107) {
+    document.querySelector("img").src = "./assets/img/download (4).jpeg";
+  } else if (valorMph >= 621) {
+    document.querySelector("img").src = "./assets/img/download (3).jpeg";
+  } else if (valorMph >= 310) {
+    document.querySelector("img").src = "./assets/img/download (2).jpeg";
+  } else if (valorMph >= 62) {
+    document.querySelector("img").src = "./assets/img/download (7).jpeg";
+  } else if (valorMph >= 28) {
+    document.querySelector("img").src = "./assets/img/download (1).jpeg";
+  } else {
+    document.querySelector("img").src = "./assets/img/download.jpeg";
+  }
+});
+
+//! Final Conversor de Velocidade -------------------------------------------------------------------------------------------
+
 //!Fazer o modo noturno e terminar os módulos
