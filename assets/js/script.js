@@ -217,3 +217,5 @@ document.querySelector("#valorK").addEventListener("input", (e) => {
 // K → C: K - 273.15
 // K → F: (K - 273.15) * 9/5 + 32
 //! Final Conversor de Temperatura -------------------------------------------------------------------------------------
+
+//!Fazer o modo noturno e terminar os módulos
