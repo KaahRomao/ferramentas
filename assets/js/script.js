@@ -18,13 +18,12 @@ elemento.aside.addEventListener("click", (e) => {
 
 function displayControler(id) {
   elemento.sections.forEach((section) => {
-    //Verifica se a classe "hidden" já existe na section... se não existir, adiciona!
-    if (!section.classList.contains("hidden")) {
-      section.classList.add("hidden");
-    }
+    section.classList.add("hidden");
+    section.classList.remove("visible");
 
     if (section.classList.contains(id)) {
       section.classList.remove("hidden");
+      section.classList.add("visible");
     }
   });
 }
@@ -179,3 +178,42 @@ function calcularImc() {
   }, 5000);
 }
 //! Final Calculadora de IMC -------------------------------------------------------------------------------------------
+
+//! Conversor de Temperatura -------------------------------------------------------------------------------------------
+document.querySelector("#valorC").addEventListener("input", (e) => {
+  let valorCelsius = document.querySelector("#valorC").value;
+
+  let resultadoCparaF = Number(valorCelsius) * (9 / 5) + 32;
+  let resultadoCparaK = Number(valorCelsius) + 273.15;
+
+  document.querySelector("#valorF").value = resultadoCparaF.toFixed(2);
+  document.querySelector("#valorK").value = resultadoCparaK.toFixed(2);
+});
+
+document.querySelector("#valorF").addEventListener("input", (e) => {
+  let valorFahrenheit = document.querySelector("#valorF").value;
+
+  let resultadoFparaC = (valorFahrenheit - 32) * (5 / 9);
+  let resultadoFparaK = (valorFahrenheit - 32) * (5 / 9) + 273.15;
+
+  document.querySelector("#valorC").value = resultadoFparaC.toFixed(2);
+  document.querySelector("#valorK").value = resultadoFparaK.toFixed(2);
+});
+
+document.querySelector("#valorK").addEventListener("input", (e) => {
+  let valorKelvin = document.querySelector("#valorK").value;
+
+  let resultadoKparaC = valorKelvin - 273.15;
+  let resultadoKparaF = (valorKelvin - 273.15) * (9 / 5) + 32;
+
+  document.querySelector("#valorC").value = resultadoKparaC.toFixed(2);
+  document.querySelector("#valorF").value = resultadoKparaF.toFixed(2);
+});
+
+// C → F: (C * 9/5) + 32
+// C → K: C + 273.15
+// F → C: (F - 32) * 5/9
+// F → K: (F - 32) * 5/9 + 273.15
+// K → C: K - 273.15
+// K → F: (K - 273.15) * 9/5 + 32
+//! Final Conversor de Temperatura -------------------------------------------------------------------------------------

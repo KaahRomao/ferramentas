@@ -63,6 +63,7 @@ article {
   width: 100%;
   justify-content: center;
   align-items: center;
+  background-color: #00002d;
 }
 
 article section {
@@ -70,6 +71,8 @@ article section {
   width: 400px;
   height: 400px;
   background-color: #0d0f36;
+  border: 3px solid gold;
+  border-radius: 10px;
 }
 
 article section form {
@@ -85,6 +88,19 @@ article section form {
 
 .hidden {
   display: none;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.visible {
+  animation: fadeIn 2s ease;
 }
 
 #valorReal,
@@ -129,6 +145,30 @@ article section form {
   background-color: #294380;
   border: none;
   color: white;
+}
+
+.place {
+  display: flex;
+  width: 90%;
+}
+
+.place2 {
+  width: 40%;
+  height: 30px;
+  border-radius: 0 20px 20px 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: #294380 1px solid;
+}
+
+#valorC,
+#valorF,
+#valorK {
+  width: 90%;
+  height: 30px;
+  text-align: center;
+  border-radius: 20px 0 0 20px;
 }
 
 footer {
