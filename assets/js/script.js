@@ -1,21 +1,18 @@
 let url = "https://economia.awesomeapi.com.br/json/last/USD-BRL";
-//
+
+let dadosGlobal = null;
+
 const elemento = {
   aside: document.querySelector("aside"),
   sections: document.querySelectorAll("section"),
 };
 
-console.log(elemento.aside);
-console.log(elemento.sections);
-
 elemento.aside.addEventListener("click", (e) => {
   e.preventDefault();
-  console.log(e.target.id);
   displayControler(e.target.id);
 });
 
-// Função de controle de exibição de sections!
-
+// Função de controle de exibição de sections
 function displayControler(id) {
   elemento.sections.forEach((section) => {
     section.classList.add("hidden");
@@ -27,6 +24,7 @@ function displayControler(id) {
     }
   });
 }
+
 //! Conversor de moedas --------------------------------------------------------------------------------------------
 
 async function getDados(url) {
@@ -34,312 +32,258 @@ async function getDados(url) {
     if (!url) throw new Error("A Api não foi achada!");
     const dadosApi = await fetch(url);
 
-    console.log(dadosApi);
     if (dadosApi.ok === false)
       throw new Error("Fetch não buscou as informações!");
+
     const dados = await dadosApi.json();
-    console.log(dados);
     dadosGlobal = dados;
+
     if (!dados) throw new Error("Não foi transformada para .json");
+
+    // Atualiza a cotação exibida na tela com o valor real da API
+    const cotacao = Number(dadosGlobal.USDBRL.bid).toFixed(2);
+    document.querySelector(".cotacao-atual").textContent =
+      `Cotação do Dólar Atual: R$ ${cotacao}`;
   } catch (error) {
     console.error(error);
-    document.querySelector(".resultado-moedas").textContent =
+    document.querySelector(".cotacao-atual").textContent =
       "Erro ao buscar cotação. Tente novamente.";
   }
 }
 
 getDados(url);
 
-document.querySelector("#valorReal").addEventListener("input", (e) => {
-  let valorDoReal = document.querySelector("#valorReal").value;
-
-  let resultadoReal = valorDoReal / dadosGlobal.USDBRL.bid;
-
-  document.querySelector("#valorUsd").value = resultadoReal.toFixed(2);
+document.querySelector("#valorReal").addEventListener("input", () => {
+  if (!dadosGlobal) return;
+  let valorDoReal = Number(document.querySelector("#valorReal").value);
+  document.querySelector("#valorUsd").value = calcRealParaDolar(
+    valorDoReal,
+    dadosGlobal.USDBRL.bid,
+  ).toFixed(2);
 });
 
-document.querySelector("#valorUsd").addEventListener("input", (e) => {
-  let valorDoUsd = document.querySelector("#valorUsd").value;
-
-  let resultadoDolar = valorDoUsd * dadosGlobal.USDBRL.bid;
-
-  document.querySelector("#valorReal").value = resultadoDolar.toFixed(2);
+document.querySelector("#valorUsd").addEventListener("input", () => {
+  if (!dadosGlobal) return;
+  let valorDoUsd = Number(document.querySelector("#valorUsd").value);
+  document.querySelector("#valorReal").value = calcDolarParaReal(
+    valorDoUsd,
+    dadosGlobal.USDBRL.bid,
+  ).toFixed(2);
 });
 
-//!Final Conversor de moedas-------------------------------------------------------------------------------------------
+// Funções puras — Moedas
+function calcRealParaDolar(real, bid) {
+  return real / bid;
+}
 
-//!Calculadora de IMC --------------------------------------------------------------------------------------------
+function calcDolarParaReal(dolar, bid) {
+  return dolar * bid;
+}
+
+//! Final Conversor de moedas ---------------------------------------------------------------------------------------
+
+//! Calculadora de IMC -----------------------------------------------------------------------------------------------
+
 function calcularImc() {
-  // Seleciona os elementos de peso, altura e gênero
   let peso = document.querySelector("#peso");
   let altura = document.querySelector("#altura");
   let genero = document.querySelector("#genero");
 
-  // Trativa de erros para os inputs de peso e altura
   if (altura.value === "0") {
-    document.querySelector(".resultado-imc").textContent =
-      "valor do Input Inválido";
-    setTimeout(() => {
-      peso.value = "";
-      altura.value = "";
-      document.querySelector(".resultado-imc").textContent = "";
-    }, 3000);
+    exibirErroImc("Valor do Input Inválido", peso, altura);
     return;
   }
 
-  if (peso.value === "" || altura.value == "") {
-    document.querySelector(".resultado-imc").textContent = "Digite algum valor";
-    setTimeout(() => {
-      peso.value = "";
-      altura.value = "";
-      document.querySelector(".resultado-imc").textContent = "";
-    }, 3000);
+  if (peso.value === "" || altura.value === "") {
+    exibirErroImc("Digite algum valor", peso, altura);
     return;
   }
 
   if (isNaN(peso.value) || isNaN(altura.value)) {
-    document.querySelector(".resultado-imc").textContent =
-      "Digite um valor válido";
-    setTimeout(() => {
-      peso.value = "";
-      altura.value = "";
-      document.querySelector(".resultado-imc").textContent = "";
-    }, 3000);
+    exibirErroImc("Digite um valor válido", peso, altura);
     return;
   }
 
   if (Number(peso.value) < 0 || Number(altura.value) < 0) {
-    document.querySelector(".resultado-imc").textContent =
-      "Digite um valor válido";
-    setTimeout(() => {
-      peso.value = "";
-      altura.value = "";
-      document.querySelector(".resultado-imc").textContent = "";
-    }, 3000);
+    exibirErroImc("Digite um valor válido", peso, altura);
     return;
   }
+
   let resultado = calcIMC(Number(peso.value), Number(altura.value));
-  // Exibe o resultado do IMC com duas casas decimais
+
   document.querySelector(".resultado-imc").textContent =
     `${resultado.toFixed(2)} (${genero.value})`;
 
-  if (resultado < 18.5 && genero.value === "Masculino") {
-    document.querySelector(".grupos").textContent =
-      "Classificação: Abaixo do peso";
-    setTimeout(() => {
-      peso.value = "";
-      altura.value = "";
-      document.querySelector(".grupos").textContent = "";
-    }, 5000);
-  } else if (resultado <= 24.9 && genero.value === "Masculino") {
-    document.querySelector(".grupos").textContent = "Classificação: normal";
-    setTimeout(() => {
-      peso.value = "";
-      altura.value = "";
-      document.querySelector(".grupos").textContent = "";
-    }, 5000);
-  } else if (resultado <= 29.9 && genero.value === "Masculino") {
-    document.querySelector(".grupos").textContent = "Classificação: Sobrepeso";
-    setTimeout(() => {
-      peso.value = "";
-      altura.value = "";
-      document.querySelector(".grupos").textContent = "";
-    }, 5000);
-  } else if (resultado <= 39.9 && genero.value === "Masculino") {
-    document.querySelector(".grupos").textContent = "Classificação: Obesidade";
-    setTimeout(() => {
-      peso.value = "";
-      altura.value = "";
-      document.querySelector(".grupos").textContent = "";
-    }, 5000);
-  } else if (resultado >= 40 && genero.value === "Masculino") {
-    document.querySelector(".grupos").textContent =
-      "Classificação: Obesidade grave";
-    setTimeout(() => {
-      peso.value = "";
-      altura.value = "";
-      document.querySelector(".grupos").textContent = "";
-    }, 5000);
-  } else {
-    document.querySelector(".grupos").textContent =
-      "Não se encaixa em nenhum grupo!";
-    setTimeout(() => {
-      peso.value = "";
-      altura.value = "";
-      document.querySelector(".grupos").textContent = "";
-    }, 5000);
-  }
-
-  if (resultado < 18.5 && genero.value === "Feminino") {
-    document.querySelector(".grupos").textContent =
-      "Classificação: Abaixo do peso";
-    setTimeout(() => {
-      peso.value = "";
-      altura.value = "";
-      document.querySelector(".grupos").textContent = "";
-    }, 5000);
-  } else if (resultado <= 23.9 && genero.value === "Feminino") {
-    document.querySelector(".grupos").textContent = "Classificação: normal";
-    setTimeout(() => {
-      peso.value = "";
-      altura.value = "";
-      document.querySelector(".grupos").textContent = "";
-    }, 5000);
-  } else if (resultado <= 28.9 && genero.value === "Feminino") {
-    document.querySelector(".grupos").textContent = "Classificação: Sobrepeso";
-    setTimeout(() => {
-      peso.value = "";
-      altura.value = "";
-      document.querySelector(".grupos").textContent = "";
-    }, 5000);
-  } else if (resultado >= 29 && genero.value === "Feminino") {
-    document.querySelector(".grupos").textContent = "Classificação: Obesidade";
-    setTimeout(() => {
-      peso.value = "";
-      altura.value = "";
-      document.querySelector(".grupos").textContent = "";
-    }, 5000);
-  } else {
-    document.querySelector(".grupos").textContent =
-      "Não se encaixa em nenhum grupo!";
-    setTimeout(() => {
-      peso.value = "";
-      altura.value = "";
-      document.querySelector(".grupos").textContent = "";
-    }, 5000);
-  }
+  let classificacao = classificarIMC(resultado, genero.value);
+  document.querySelector(".grupos").textContent =
+    `Classificação: ${classificacao}`;
 
   setTimeout(() => {
     peso.value = "";
     altura.value = "";
     document.querySelector(".resultado-imc").textContent = "";
+    document.querySelector(".grupos").textContent = "";
   }, 5000);
 }
 
+// Funções puras — IMC
 function calcIMC(peso, altura) {
   return peso / altura ** 2;
 }
-//! Final Calculadora de IMC -------------------------------------------------------------------------------------------
 
-//! Conversor de Temperatura -------------------------------------------------------------------------------------------
-document.querySelector("#valorC").addEventListener("input", (e) => {
-  let valorCelsius = document.querySelector("#valorC").value;
+function classificarIMC(imc, genero) {
+  if (imc < 18.5) return "Abaixo do peso";
 
-  let resultadoCparaF = Number(valorCelsius) * (9 / 5) + 32;
-  let resultadoCparaK = Number(valorCelsius) + 273.15;
+  if (genero === "Masculino") {
+    if (imc <= 24.9) return "Normal";
+    if (imc <= 29.9) return "Sobrepeso";
+    if (imc <= 39.9) return "Obesidade";
+    return "Obesidade grave";
+  }
 
-  document.querySelector("#valorF").value = resultadoCparaF.toFixed(2);
-  document.querySelector("#valorK").value = resultadoCparaK.toFixed(2);
+  if (genero === "Feminino") {
+    if (imc <= 23.9) return "Normal";
+    if (imc <= 28.9) return "Sobrepeso";
+    return "Obesidade";
+  }
+
+  return "Não se encaixa em nenhum grupo!";
+}
+
+function exibirErroImc(mensagem, peso, altura) {
+  document.querySelector(".resultado-imc").textContent = mensagem;
+  setTimeout(() => {
+    peso.value = "";
+    altura.value = "";
+    document.querySelector(".resultado-imc").textContent = "";
+  }, 3000);
+}
+
+//! Final Calculadora de IMC ----------------------------------------------------------------------------------------
+
+//! Conversor de Temperatura ----------------------------------------------------------------------------------------
+
+// Funções puras — Temperatura
+function calcCparaF(c) {
+  return c * (9 / 5) + 32;
+}
+function calcCparaK(c) {
+  return c + 273.15;
+}
+function calcFparaC(f) {
+  return (f - 32) * (5 / 9);
+}
+function calcFparaK(f) {
+  return (f - 32) * (5 / 9) + 273.15;
+}
+function calcKparaC(k) {
+  return k - 273.15;
+}
+function calcKparaF(k) {
+  return (k - 273.15) * (9 / 5) + 32;
+}
+
+document.querySelector("#valorC").addEventListener("input", () => {
+  let c = Number(document.querySelector("#valorC").value);
+  document.querySelector("#valorF").value = calcCparaF(c).toFixed(2);
+  document.querySelector("#valorK").value = calcCparaK(c).toFixed(2);
 });
 
-document.querySelector("#valorF").addEventListener("input", (e) => {
-  let valorFahrenheit = document.querySelector("#valorF").value;
-
-  let resultadoFparaC = (valorFahrenheit - 32) * (5 / 9);
-  let resultadoFparaK = (valorFahrenheit - 32) * (5 / 9) + 273.15;
-
-  document.querySelector("#valorC").value = resultadoFparaC.toFixed(2);
-  document.querySelector("#valorK").value = resultadoFparaK.toFixed(2);
+document.querySelector("#valorF").addEventListener("input", () => {
+  let f = Number(document.querySelector("#valorF").value);
+  document.querySelector("#valorC").value = calcFparaC(f).toFixed(2);
+  document.querySelector("#valorK").value = calcFparaK(f).toFixed(2);
 });
 
-document.querySelector("#valorK").addEventListener("input", (e) => {
-  let valorKelvin = document.querySelector("#valorK").value;
-
-  let resultadoKparaC = valorKelvin - 273.15;
-  let resultadoKparaF = (valorKelvin - 273.15) * (9 / 5) + 32;
-
-  document.querySelector("#valorC").value = resultadoKparaC.toFixed(2);
-  document.querySelector("#valorF").value = resultadoKparaF.toFixed(2);
+document.querySelector("#valorK").addEventListener("input", () => {
+  let k = Number(document.querySelector("#valorK").value);
+  document.querySelector("#valorC").value = calcKparaC(k).toFixed(2);
+  document.querySelector("#valorF").value = calcKparaF(k).toFixed(2);
 });
 
-// C → F: (C * 9/5) + 32
-// C → K: C + 273.15
-// F → C: (F - 32) * 5/9
-// F → K: (F - 32) * 5/9 + 273.15
-// K → C: K - 273.15
-// K → F: (K - 273.15) * 9/5 + 32
-//! Final Conversor de Temperatura -------------------------------------------------------------------------------------
+//! Final Conversor de Temperatura ----------------------------------------------------------------------------------
 
-//! Conversor de Velocidade -------------------------------------------------------------------------------------------
+//! Conversor de Velocidade -----------------------------------------------------------------------------------------
 
-document.querySelector("#km").addEventListener("input", (e) => {
+// Funções puras — Velocidade
+function calcKmParaMph(km) {
+  return km * 0.621371;
+}
+function calcMphParaKm(mph) {
+  return mph * 1.60934;
+}
+
+document.querySelector("#km").addEventListener("input", () => {
   let valorKm = Number(document.querySelector("#km").value);
+  document.querySelector("#mph").value = calcKmParaMph(valorKm).toFixed(2);
 
-  let resultadoMph = valorKm * 0.621371;
-  document.querySelector("#mph").value = resultadoMph.toFixed(2);
-
-  if (valorKm >= 100000) {
-    document.querySelector("#velocidade").src =
-      "./assets/img/download (5).jpeg";
-  } else if (valorKm >= 5000) {
-    document.querySelector("#velocidade").src =
-      "./assets/img/download (4).jpeg";
-  } else if (valorKm >= 1000) {
-    document.querySelector("#velocidade").src =
-      "./assets/img/download (3).jpeg";
-  } else if (valorKm >= 500) {
-    document.querySelector("#velocidade").src =
-      "./assets/img/download (2).jpeg";
-  } else if (valorKm >= 100) {
-    document.querySelector("#velocidade").src =
-      "./assets/img/download (7).jpeg";
-  } else if (valorKm >= 45) {
-    document.querySelector("#velocidade").src =
-      "./assets/img/download (1).jpeg";
-  } else {
-    document.querySelector("#velocidade").src = "./assets/img/download.jpeg";
-  }
+  atualizarImagemVelocidade(valorKm, "km");
 });
 
-document.querySelector("#mph").addEventListener("input", (e) => {
+document.querySelector("#mph").addEventListener("input", () => {
   let valorMph = Number(document.querySelector("#mph").value);
+  document.querySelector("#km").value = calcMphParaKm(valorMph).toFixed(2);
 
-  let resultadoKm = valorMph * 1.60934;
-  document.querySelector("#km").value = resultadoKm.toFixed(2);
-
-  if (valorMph >= 62137) {
-    document.querySelector("#velocidade").src =
-      "./assets/img/download (5).jpeg";
-  } else if (valorMph >= 3107) {
-    document.querySelector("#velocidade").src =
-      "./assets/img/download (4).jpeg";
-  } else if (valorMph >= 621) {
-    document.querySelector("#velocidade").src =
-      "./assets/img/download (3).jpeg";
-  } else if (valorMph >= 310) {
-    document.querySelector("#velocidade").src =
-      "./assets/img/download (2).jpeg";
-  } else if (valorMph >= 62) {
-    document.querySelector("#velocidade").src =
-      "./assets/img/download (7).jpeg";
-  } else if (valorMph >= 28) {
-    document.querySelector("#velocidade").src =
-      "./assets/img/download (1).jpeg";
-  } else {
-    document.querySelector("#velocidade").src = "./assets/img/download.jpeg";
-  }
+  atualizarImagemVelocidade(valorMph, "mph");
 });
 
-//! Final Conversor de Velocidade -------------------------------------------------------------------------------------------
+function atualizarImagemVelocidade(valor, unidade) {
+  let limites =
+    unidade === "km"
+      ? [100000, 5000, 1000, 500, 100, 45]
+      : [62137, 3107, 621, 310, 62, 28];
+
+  let imagens = [
+    "./assets/img/download (5).jpeg",
+    "./assets/img/download (4).jpeg",
+    "./assets/img/download (3).jpeg",
+    "./assets/img/download (2).jpeg",
+    "./assets/img/download (7).jpeg",
+    "./assets/img/download (1).jpeg",
+    "./assets/img/download.jpeg",
+  ];
+
+  let src = imagens[imagens.length - 1];
+  for (let i = 0; i < limites.length; i++) {
+    if (valor >= limites[i]) {
+      src = imagens[i];
+      break;
+    }
+  }
+
+  document.querySelector("#velocidade").src = src;
+}
+
+//! Final Conversor de Velocidade -----------------------------------------------------------------------------------
 
 //! Conversor de Massa ----------------------------------------------------------------------------------------------
 
-document.querySelector("#kg").addEventListener("input", (e) => {
+// Funções puras — Massa
+function calcKgParaLb(kg) {
+  return kg * 2.20462;
+}
+function calcLbParaKg(lb) {
+  return lb * 0.453592;
+}
+
+document.querySelector("#kg").addEventListener("input", () => {
   let valorKg = Number(document.querySelector("#kg").value);
-
-  let resultadoLb = valorKg * 2.20462;
-  document.querySelector("#lb").value = resultadoLb.toFixed(2);
+  document.querySelector("#lb").value = calcKgParaLb(valorKg).toFixed(2);
 });
 
-document.querySelector("#lb").addEventListener("input", (e) => {
+document.querySelector("#lb").addEventListener("input", () => {
   let valorLb = Number(document.querySelector("#lb").value);
-  let resultadoKg = valorLb * 0.453592;
-  document.querySelector("#kg").value = resultadoKg.toFixed(2);
+  document.querySelector("#kg").value = calcLbParaKg(valorLb).toFixed(2);
 });
 
-//! Final Conversor de Massa ---------------------------------------------------------------------------------------------
+//! Final Conversor de Massa ----------------------------------------------------------------------------------------
 
 //! Regra de 3 ----------------------------------------------------------------------------------------------
+
+// Função pura — Regra de 3
+function calcRegraDeT(a, b, c) {
+  return (b * c) / a;
+}
 
 document.querySelector("#calcRegra").addEventListener("click", (e) => {
   e.preventDefault();
@@ -369,13 +313,15 @@ document.querySelector("#calcRegra").addEventListener("click", (e) => {
     return;
   }
 
-  let multi = valor2.value * valor3.value;
-  let x = multi / valor1.value;
-
-  document.querySelector("#v4").value = x;
+  let x = calcRegraDeT(
+    Number(valor1.value),
+    Number(valor2.value),
+    Number(valor3.value),
+  );
+  document.querySelector("#v4").value = x.toFixed(2);
 });
 
-//! Final Regra de 3 ----------------------------------------------------------------------------------------------
+//! Final Regra de 3 ------------------------------------------------------------------------------------------------
 
 //! Limpeza de dados ------------------------------------------------------------------------------------------------
 
@@ -384,11 +330,10 @@ function displayClean() {
     input.value = "";
   });
 }
-//! Final Limpeza de dados --------------------------------------------------------------------------------------------
 
-//!Fazer o modo noturno e terminar os módulo
+//! Final Limpeza de dados ------------------------------------------------------------------------------------------
 
-//! Modo noturno ------------------------------------------------------------------------------------------------
+//! Modo noturno ----------------------------------------------------------------------------------------------------
 
 const coisa = {
   body: document.querySelector("body"),
@@ -404,3 +349,5 @@ coisa.dark.addEventListener("click", () => {
     coisa.dark.src = "./assets/img/sun-regular-full.svg";
   }
 });
+
+//! Final Modo noturno ----------------------------------------------------------------------------------------------
