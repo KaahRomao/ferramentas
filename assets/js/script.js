@@ -43,7 +43,8 @@ async function getDados(url) {
     if (!dados) throw new Error("Não foi transformada para .json");
   } catch (error) {
     console.error(error);
-    console.error("Algo deu errado, chefe!");
+    document.querySelector(".resultado-moedas").textContent =
+      "Erro ao buscar cotação. Tente novamente.";
   }
 }
 
@@ -117,9 +118,7 @@ function calcularImc() {
     }, 3000);
     return;
   }
-  // Calcula o IMC usando a fórmula: peso / (altura * altura)
-  let resultado = peso.value / altura.value ** 2;
-
+  let resultado = calcIMC(Number(peso.value), Number(altura.value));
   // Exibe o resultado do IMC com duas casas decimais
   document.querySelector(".resultado-imc").textContent =
     `${resultado.toFixed(2)} (${genero.value})`;
@@ -176,6 +175,10 @@ function calcularImc() {
     altura.value = "";
     document.querySelector(".resultado-imc").textContent = "";
   }, 5000);
+}
+
+function calcIMC(peso, altura) {
+  return peso / altura ** 2;
 }
 //! Final Calculadora de IMC -------------------------------------------------------------------------------------------
 
@@ -267,5 +270,69 @@ document.querySelector("#mph").addEventListener("input", (e) => {
 });
 
 //! Final Conversor de Velocidade -------------------------------------------------------------------------------------------
+
+//! Conversor de Massa ----------------------------------------------------------------------------------------------
+
+document.querySelector("#kg").addEventListener("input", (e) => {
+  let valorKg = Number(document.querySelector("#kg").value);
+
+  let resultadoLb = valorKg * 2.20462;
+  document.querySelector("#lb").value = resultadoLb.toFixed(2);
+});
+
+document.querySelector("#lb").addEventListener("input", (e) => {
+  let valorLb = Number(document.querySelector("#lb").value);
+  let resultadoKg = valorLb * 0.453592;
+  document.querySelector("#kg").value = resultadoKg.toFixed(2);
+});
+
+//! Final Conversor de Massa ---------------------------------------------------------------------------------------------
+
+//! Regra de 3 ----------------------------------------------------------------------------------------------
+
+document.querySelector("#calcRegra").addEventListener("click", (e) => {
+  e.preventDefault();
+  let valor1 = document.querySelector("#v1");
+  let valor2 = document.querySelector("#v2");
+  let valor3 = document.querySelector("#v3");
+
+  if (valor1.value === "" || valor2.value === "" || valor3.value === "") {
+    document.querySelector("#v4").value = "Digite todos os valores!";
+    setTimeout(() => {
+      valor1.value = "";
+      valor2.value = "";
+      valor3.value = "";
+      document.querySelector("#v4").value = "";
+    }, 3000);
+    return;
+  }
+
+  if (valor1.value == 0 || valor2.value == 0 || valor3.value == 0) {
+    document.querySelector("#v4").value = "Valor não pode ser zero!";
+    setTimeout(() => {
+      valor1.value = "";
+      valor2.value = "";
+      valor3.value = "";
+      document.querySelector("#v4").value = "";
+    }, 3000);
+    return;
+  }
+
+  let multi = valor2.value * valor3.value;
+  let x = multi / valor1.value;
+
+  document.querySelector("#v4").value = x;
+});
+
+//! Final Regra de 3 ----------------------------------------------------------------------------------------------
+
+//! Limpeza de dados ------------------------------------------------------------------------------------------------
+
+function displayClean() {
+  document.querySelectorAll("input").forEach((input) => {
+    input.value = "";
+  });
+}
+//! Final Limpeza de dados --------------------------------------------------------------------------------------------
 
 //!Fazer o modo noturno e terminar os módulos

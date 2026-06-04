@@ -113,27 +113,59 @@
 
             <!-- Final Velocidade ------------------------------------------------------------------------------------------>
 
+
+            <!-- Conversor de Massa -------------------------------------------------------------------------------------------->
             <section class="hidden massa">
                 <form action="">
-                    <h2>Lorem, ipsum.</h2>
-                    <div>
-                        <input type="text" placeholder="Valor">
-                        <input type="text" placeholder="Valor">
+                    <h2>Conversor de Massa</h2>
+                    <div class="local">
+
+                        <input type="number" placeholder="Valor em Quilogramas" id="kg">
+                        <div class="local2">
+                            <p>Quilograma (kg)</p>
+                        </div>
                     </div>
-                    <button>Calcular</button>
+                    <div class="local">
+                        <input type="number" placeholder="Valor em Libras" id="lb">
+                        <div class="local2">
+                            <p>
+                                Libras (lb)
+                            </p>
+                        </div>
+                    </div>
+
                 </form>
             </section>
+
+            <!-- Final Conversor de Massa ------------------------------------------------------------------------------->
+
+
+            <!-- Conversor de Regra de 3 ---------------------------------------------------------------------------------------->
+
             <section class="hidden regra">
-                <form action="">
-                    <h2>Lorem, ipsum.</h2>
-                    <div>
-                        <input type="text" placeholder="Valor">
-                        <input type="text" placeholder="Valor">
+                <form action="" id="regra3">
+                    <h2>Regra de 3</h2>
+                    <div class="quadro1">
+                        <div class="quadro">
+                            <input type="number" placeholder="Digite um valor" id="v1">
+                            <input type="number" placeholder="Digite outro valor" id="v2">
+                        </div class="quadro">
+                        <input type="number" placeholder="Digite o último valor" id="v3">
+                        <input type="text" placeholder="X" id="v4" readonly>
                     </div>
-                    <button>Calcular</button>
+                    <div class="botoes">
+                        <button id="calcRegra" class="botao">Calcular</button>
+                        <button onclick="displayClean()" type="button" class="botao">Limpar</button>
+                    </div>
                 </form>
             </section>
+
+
+            <!-- Final Conversor de Regra d 3e ----------------------------------------------------------------------------------->
+
         </article>
+
+
 
     </main>
 

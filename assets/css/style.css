@@ -178,13 +178,56 @@ article section form {
 }
 
 #km,
-#mph {
+#mph,
+#kg,
+#lb {
   width: 80%;
   height: 30px;
   text-align: center;
   border-radius: 20px 0 0 20px;
 }
 
+#quadro1 {
+  height: 100 px;
+  width: 90%;
+  gap: 50px;
+}
+
+#regra3 {
+  gap: 20px;
+}
+
+#v1,
+#v2,
+#v3,
+#v4 {
+  height: 30px;
+  text-align: center;
+  border-radius: 20px;
+}
+
+.botoes {
+  display: flex;
+  width: 90%;
+  gap: 20px;
+  justify-content: center;
+  align-items: center;
+}
+
+.botao {
+  width: 40%;
+  height: 30px;
+  background-color: #294380;
+  border: none;
+  color: white;
+  border-radius: 20px;
+}
+
+.botao:hover {
+  scale: 1.05;
+  cursor: pointer;
+  transition: background-color 0.5s ease;
+}
 footer {
   display: flex;
   align-items: center;
