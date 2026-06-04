@@ -123,7 +123,7 @@ function calcularImc() {
   document.querySelector(".resultado-imc").textContent =
     `${resultado.toFixed(2)} (${genero.value})`;
 
-  if (resultado < 18.5) {
+  if (resultado < 18.5 && genero.value === "Masculino") {
     document.querySelector(".grupos").textContent =
       "Classificação: Abaixo do peso";
     setTimeout(() => {
@@ -131,30 +131,69 @@ function calcularImc() {
       altura.value = "";
       document.querySelector(".grupos").textContent = "";
     }, 5000);
-  } else if (resultado <= 24.9) {
+  } else if (resultado <= 24.9 && genero.value === "Masculino") {
     document.querySelector(".grupos").textContent = "Classificação: normal";
     setTimeout(() => {
       peso.value = "";
       altura.value = "";
       document.querySelector(".grupos").textContent = "";
     }, 5000);
-  } else if (resultado <= 29.9) {
+  } else if (resultado <= 29.9 && genero.value === "Masculino") {
     document.querySelector(".grupos").textContent = "Classificação: Sobrepeso";
     setTimeout(() => {
       peso.value = "";
       altura.value = "";
       document.querySelector(".grupos").textContent = "";
     }, 5000);
-  } else if (resultado <= 39.9) {
+  } else if (resultado <= 39.9 && genero.value === "Masculino") {
     document.querySelector(".grupos").textContent = "Classificação: Obesidade";
     setTimeout(() => {
       peso.value = "";
       altura.value = "";
       document.querySelector(".grupos").textContent = "";
     }, 5000);
-  } else if (resultado >= 40) {
+  } else if (resultado >= 40 && genero.value === "Masculino") {
     document.querySelector(".grupos").textContent =
       "Classificação: Obesidade grave";
+    setTimeout(() => {
+      peso.value = "";
+      altura.value = "";
+      document.querySelector(".grupos").textContent = "";
+    }, 5000);
+  } else {
+    document.querySelector(".grupos").textContent =
+      "Não se encaixa em nenhum grupo!";
+    setTimeout(() => {
+      peso.value = "";
+      altura.value = "";
+      document.querySelector(".grupos").textContent = "";
+    }, 5000);
+  }
+
+  if (resultado < 18.5 && genero.value === "Feminino") {
+    document.querySelector(".grupos").textContent =
+      "Classificação: Abaixo do peso";
+    setTimeout(() => {
+      peso.value = "";
+      altura.value = "";
+      document.querySelector(".grupos").textContent = "";
+    }, 5000);
+  } else if (resultado <= 23.9 && genero.value === "Feminino") {
+    document.querySelector(".grupos").textContent = "Classificação: normal";
+    setTimeout(() => {
+      peso.value = "";
+      altura.value = "";
+      document.querySelector(".grupos").textContent = "";
+    }, 5000);
+  } else if (resultado <= 28.9 && genero.value === "Feminino") {
+    document.querySelector(".grupos").textContent = "Classificação: Sobrepeso";
+    setTimeout(() => {
+      peso.value = "";
+      altura.value = "";
+      document.querySelector(".grupos").textContent = "";
+    }, 5000);
+  } else if (resultado >= 29 && genero.value === "Feminino") {
+    document.querySelector(".grupos").textContent = "Classificação: Obesidade";
     setTimeout(() => {
       peso.value = "";
       altura.value = "";
