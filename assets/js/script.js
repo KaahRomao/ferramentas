@@ -269,19 +269,25 @@ document.querySelector("#km").addEventListener("input", (e) => {
   document.querySelector("#mph").value = resultadoMph.toFixed(2);
 
   if (valorKm >= 100000) {
-    document.querySelector("img").src = "./assets/img/download (5).jpeg";
+    document.querySelector("#velocidade").src =
+      "./assets/img/download (5).jpeg";
   } else if (valorKm >= 5000) {
-    document.querySelector("img").src = "./assets/img/download (4).jpeg";
+    document.querySelector("#velocidade").src =
+      "./assets/img/download (4).jpeg";
   } else if (valorKm >= 1000) {
-    document.querySelector("img").src = "./assets/img/download (3).jpeg";
+    document.querySelector("#velocidade").src =
+      "./assets/img/download (3).jpeg";
   } else if (valorKm >= 500) {
-    document.querySelector("img").src = "./assets/img/download (2).jpeg";
+    document.querySelector("#velocidade").src =
+      "./assets/img/download (2).jpeg";
   } else if (valorKm >= 100) {
-    document.querySelector("img").src = "./assets/img/download (7).jpeg";
+    document.querySelector("#velocidade").src =
+      "./assets/img/download (7).jpeg";
   } else if (valorKm >= 45) {
-    document.querySelector("img").src = "./assets/img/download (1).jpeg";
+    document.querySelector("#velocidade").src =
+      "./assets/img/download (1).jpeg";
   } else {
-    document.querySelector("img").src = "./assets/img/download.jpeg";
+    document.querySelector("#velocidade").src = "./assets/img/download.jpeg";
   }
 });
 
@@ -292,19 +298,25 @@ document.querySelector("#mph").addEventListener("input", (e) => {
   document.querySelector("#km").value = resultadoKm.toFixed(2);
 
   if (valorMph >= 62137) {
-    document.querySelector("img").src = "./assets/img/download (5).jpeg";
+    document.querySelector("#velocidade").src =
+      "./assets/img/download (5).jpeg";
   } else if (valorMph >= 3107) {
-    document.querySelector("img").src = "./assets/img/download (4).jpeg";
+    document.querySelector("#velocidade").src =
+      "./assets/img/download (4).jpeg";
   } else if (valorMph >= 621) {
-    document.querySelector("img").src = "./assets/img/download (3).jpeg";
+    document.querySelector("#velocidade").src =
+      "./assets/img/download (3).jpeg";
   } else if (valorMph >= 310) {
-    document.querySelector("img").src = "./assets/img/download (2).jpeg";
+    document.querySelector("#velocidade").src =
+      "./assets/img/download (2).jpeg";
   } else if (valorMph >= 62) {
-    document.querySelector("img").src = "./assets/img/download (7).jpeg";
+    document.querySelector("#velocidade").src =
+      "./assets/img/download (7).jpeg";
   } else if (valorMph >= 28) {
-    document.querySelector("img").src = "./assets/img/download (1).jpeg";
+    document.querySelector("#velocidade").src =
+      "./assets/img/download (1).jpeg";
   } else {
-    document.querySelector("img").src = "./assets/img/download.jpeg";
+    document.querySelector("#velocidade").src = "./assets/img/download.jpeg";
   }
 });
 
@@ -374,4 +386,21 @@ function displayClean() {
 }
 //! Final Limpeza de dados --------------------------------------------------------------------------------------------
 
-//!Fazer o modo noturno e terminar os módulos
+//!Fazer o modo noturno e terminar os módulo
+
+//! Modo noturno ------------------------------------------------------------------------------------------------
+
+const coisa = {
+  body: document.querySelector("body"),
+  dark: document.querySelector("#btnDark"),
+};
+
+coisa.dark.addEventListener("click", () => {
+  coisa.body.classList.toggle("dark-mode");
+
+  if (coisa.body.classList.contains("dark-mode")) {
+    coisa.dark.src = "./assets/img/moon-solid-full.svg";
+  } else {
+    coisa.dark.src = "./assets/img/sun-regular-full.svg";
+  }
+});

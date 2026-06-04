@@ -15,7 +15,7 @@ body {
 header {
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-around;
   width: 100%;
   flex-grow: 1;
   background-color: #0d0f36;
@@ -235,4 +235,39 @@ footer {
   flex-grow: 0.5;
   background-color: #0d0f36;
   color: white;
+}
+
+body.dark-mode header {
+  background-color: #1a1a1a;
+}
+
+body.dark-mode aside {
+  background-color: #2a2a2a;
+}
+
+body.dark-mode main aside a {
+  background-color: #3a3a3a;
+}
+
+body.dark-mode article {
+  background-color: #111111;
+}
+
+body.dark-mode article section {
+  background-color: #1e1e1e;
+  border-color: silver;
+}
+
+body.dark-mode article section button {
+  background-color: #3a3a3a;
+  color: white;
+}
+
+body.dark-mode footer {
+  background-color: #1a1a1a;
+}
+
+#btnDark:hover {
+  cursor: pointer;
+  scale: 110%;
 }
