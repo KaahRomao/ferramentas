@@ -133,6 +133,19 @@ article section form {
   text-align: center;
 }
 
+#calculadorImc {
+  width: 70%;
+  height: 30px;
+  border: none;
+  color: white;
+  border-radius: 20px;
+}
+
+#calculadorImc:hover {
+  cursor: pointer;
+  scale: 105%;
+}
+
 #peso::placeholder,
 #altura::placeholder {
   padding: 5px;
@@ -261,6 +274,10 @@ body.dark-mode article section {
 body.dark-mode article section button {
   background-color: #3a3a3a;
   color: white;
+}
+
+body.dark-mode article section #calculadorImc {
+  background-color: #555555;
 }
 
 body.dark-mode footer {
